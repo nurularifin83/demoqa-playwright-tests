@@ -25,13 +25,12 @@ The repository is created for both **learning** and **professional** QA automati
 
 ## 🧰 Tech Stack
 
-| Tool / Library                   | Description                             |
-| -------------------------------- | --------------------------------------- |
-| **Playwright**                   | Modern E2E automation testing framework |
-| **Node.js**                      | JavaScript runtime environment          |
-| **GitHub Actions / Jenkins**     | Continuous Integration & Delivery       |
-| **Mocha HTML Report (optional)** | Visual test reporting                   |
-| **Allure Reports (optional)**    | Advanced reporting integration          |
+| Tool / Library                | Description                             |
+| ----------------------------- | --------------------------------------- |
+| **Playwright**                | Modern E2E automation testing framework |
+| **Node.js**                   | JavaScript runtime environment          |
+| **GitHub Actions / Jenkins**  | Continuous Integration & Delivery       |
+| **Allure Reports (optional)** | Advanced reporting integration          |
 
 ---
 
@@ -84,7 +83,7 @@ npm install --save-dev allure-playwright
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/<your-repo-name>.git
+git clone https://github.com/nurularifin83/demoqa-playwright-tests.git
 cd <your-repo-name>
 ```
 
