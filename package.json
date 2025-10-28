@@ -1,0 +1,33 @@
+{
+  "name": "demoqa-playwright-tests",
+  "version": "1.0.0",
+  "description": "This is automation testing for demoqa web with playright",
+  "main": "index.js",
+  "scripts": {
+    "test:sanity": "npx playwright test --grep @sanity",
+    "test:smoke": "npx playwright test --grep @smoke",
+    "test:regression": "npx playwright test --grep @regression",
+    "test:smoke:chromium": "npx playwright test --project=chromium --grep @smoke",
+    "test:smoke:firefox": "npx playwright test --project=firefox --grep @smoke",
+    "test:smoke:webkit": "npx playwright test --project=webkit --grep @smoke",
+    "test:sanity:chromium": "npx playwright test --project=chromium --grep @sanity",
+    "test:sanity:firefox": "npx playwright test --project=firefox --grep @sanity",
+    "test:sanity:webkit": "npx playwright test --project=webkit --grep @sanity",
+    "test:regression:chromium": "npx playwright test --project=chromium --grep @regression",
+    "test:regression:firefox": "npx playwright test --project=firefox --grep @regression",
+    "test:regression:webkit": "npx playwright test --project=webkit --grep @regression",
+    "test:all": "npx playwright test",
+    "report": "npx playwright show-report"
+  },
+  "keywords": [
+    "Playwright",
+    "Automation",
+    "QA"
+  ],
+  "author": "Nurul Arifin",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.9.1"
+  }
+}
