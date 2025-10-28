@@ -25,12 +25,11 @@ The repository is created for both **learning** and **professional** QA automati
 
 ## 🧰 Tech Stack
 
-| Tool / Library                | Description                             |
-| ----------------------------- | --------------------------------------- |
-| **Playwright**                | Modern E2E automation testing framework |
-| **Node.js**                   | JavaScript runtime environment          |
-| **GitHub Actions / Jenkins**  | Continuous Integration & Delivery       |
-| **Allure Reports (optional)** | Advanced reporting integration          |
+| Tool / Library               | Description                             |
+| ---------------------------- | --------------------------------------- |
+| **Playwright**               | Modern E2E automation testing framework |
+| **Node.js**                  | JavaScript runtime environment          |
+| **GitHub Actions / Jenkins** | Continuous Integration & Delivery       |
 
 ---
 
