@@ -39,43 +39,21 @@ export default class HomePage extends BasePage {
    * 🧩 Utility: make sure homepage is stable and ads removed before clicking
    */
   async ensurePageReady() {
-    // Use 'domcontentloaded' instead of 'load' to prevent long hangs in Jenkins
-    await this.page.waitForLoadState("domcontentloaded", { timeout: 15000 });
+    // Wait for the page to start loading
+    await this.page.waitForLoadState("domcontentloaded");
 
-    // Wait extra for network to settle — but don't block forever
-    try {
-      await this.page.waitForLoadState("networkidle", { timeout: 10000 });
-    } catch {
-      console.warn("⚠️ Network idle not reached — continuing anyway");
-    }
+    // Optional small delay for UI animations
+    await this.page.waitForTimeout(1000);
 
-    // Remove banners, iframes, or ads that block clicks
+    // Wait for at least one main card or section to be visible
+    const mainCard = this.page.locator(".card.mt-4.top-card").first();
+    await mainCard.waitFor({ state: "visible", timeout: 20000 });
+
+    // Remove annoying ads or banners if present
     await this.page.evaluate(() => {
-      const selectors = [
-        "#fixedban",
-        ".Advertisement",
-        "iframe",
-        "#adplus-anchor",
-        "#google_ads_iframe_",
-        ".modal-backdrop",
-        ".loading",
-        ".spinner",
-      ];
-      selectors.forEach((sel) => {
-        document.querySelectorAll(sel).forEach((el) => el.remove());
-      });
+      document
+        .querySelectorAll("#fixedban, iframe, .advertisement")
+        .forEach((el) => el.remove());
     });
-
-    // Verify the page body is visible (not blank)
-    const bodyVisible = await this.page.locator("body").isVisible();
-    if (!bodyVisible) throw new Error("❌ Page body not visible after load");
-
-    // Try to wait for one of the main cards (skip if not visible)
-    try {
-      const mainCard = this.page.locator(".card.mt-4.top-card").first();
-      await mainCard.waitFor({ state: "visible", timeout: 15000 });
-    } catch {
-      console.warn("⚠️ Main card not visible — continuing");
-    }
   }
 }
