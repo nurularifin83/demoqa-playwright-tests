@@ -85,11 +85,21 @@ export default class PracticeFormPage extends BasePage {
   }
 
   async clickOnCloseFormButton() {
+    // 🧹 Remove blocking ad overlay (DemoQA issue)
+    await this.page.evaluate(() => {
+      const ad = document.querySelector("#fixedban");
+      if (ad) ad.style.display = "none";
+    });
+
     const closeBtn = this.page.locator("//button[@id='closeLargeModal']");
+
+    // ✅ Safe click with scroll + force
     if (await closeBtn.isVisible()) {
-      await closeBtn.click();
+      await closeBtn.scrollIntoViewIfNeeded();
+      await this.page.waitForTimeout(500); // let animations finish
+      await closeBtn.click({ force: true });
     } else {
-      this.log("⚠️  Modal already closed, skipping click", "warn");
+      this.log("⚠️ Modal already closed, skipping click", "warn");
     }
   }
 
