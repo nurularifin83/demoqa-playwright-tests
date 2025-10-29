@@ -56,6 +56,9 @@ export default class BasePage {
     }
   }
 
+  // ------------------------------
+  // 🖱️ Safe Click (improved for CI/CD)
+  // ------------------------------
   async safeClick(selector) {
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
@@ -66,25 +69,42 @@ export default class BasePage {
           await this.page.goto("/", { waitUntil: "domcontentloaded" });
         }
 
-        // Wait until element visible and not blocked
+        // Wait for page to be ready and ads removed
+        await this.page.waitForLoadState("domcontentloaded");
+        await this.page.waitForTimeout(800); // small buffer for animations
+
+        // 🧹 Remove ad overlays (DemoQA issue)
+        await this.page.evaluate(() => {
+          const ads = ["#fixedban", "iframe", ".advertisement"];
+          ads.forEach((sel) => {
+            const el = document.querySelector(sel);
+            if (el) el.style.display = "none";
+          });
+        });
+
+        // Wait until element is visible and clickable
         await this.page.waitForSelector(selector, {
           state: "visible",
-          timeout: 15000,
+          timeout: 20000, // ⏳ increased for CI stability
         });
+
         await this.page
           .waitForSelector(".modal.show", { state: "hidden", timeout: 2000 })
           .catch(() => {});
+
         await this.page.click(selector);
+        this.log(`✅ Clicked: ${selector}`);
         return; // ✅ success
       } catch (error) {
         const msg = error.message || "";
         if (
           msg.includes("Target page") ||
           msg.includes("has been closed") ||
-          msg.includes("intercepts pointer events")
+          msg.includes("intercepts pointer events") ||
+          msg.includes("Timeout")
         ) {
           console.warn(`⚠️ Retry click attempt ${attempt} due to: ${msg}`);
-          await this.page.waitForTimeout(800);
+          await this.page.waitForTimeout(1000);
         } else {
           throw error;
         }
