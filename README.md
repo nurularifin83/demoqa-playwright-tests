@@ -14,7 +14,7 @@
 This project is a **Playwright-based end-to-end automation testing framework** built using **JavaScript (Node.js)**.  
 It automates test cases for the public website [DemoQA](https://demoqa.com/).
 
-The repository is created for both **learning** and **professional** QA automation purposes, designed to handle:
+The repository is created for **learning** QA automation purposes, designed to handle:
 
 - Smoke Testing ✅
 - Sanity Testing ✅
@@ -90,7 +90,7 @@ npm install --save-dev allure-playwright
 
 ```bash
 git clone https://github.com/nurularifin83/demoqa-playwright-tests.git
-cd <your-repo-name>
+cd <your-folder-name>
 ```
 
 ### 2️⃣ Install Dependencies
@@ -122,7 +122,7 @@ npx playwright test --headed
 Run in parallel (default):
 
 ```bash
-npx playwright test --workers=4
+npx playwright test --workers=3
 ```
 
 ---
@@ -138,49 +138,64 @@ npx playwright show-report
 (Optional) If using Allure:
 
 ```bash
-allure generate allure-results --clean -o allure-report
-allure open allure-report
+npm run allure:generate
+npm run allure:open
 ```
 
 ---
 
-## 🔄 CI/CD Integration (GitHub Actions)
+## 🔄 🤖 CI/CD Integration (GitHub Actions & Jenkins)
 
-This project includes a GitHub Actions workflow for CI/CD automation.
+This project includes two CI/CD pipelines — one with GitHub Actions and another with Jenkins — to ensure continuous testing and delivery.
 
 **Workflow file:**  
 `.github/workflows/playwright-ci.yml`
 
-### Example Workflow:
-
-```yaml
-name: Playwright Tests
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Run Playwright Tests
-        run: npx playwright test --reporter=html
-```
+### 🚀 GitHub Actions
 
 ---
+
+Runs automatically whenever you push new code to the main branch.
+
+#### Workflow file:
+
+## `.github/workflows/playwright-ci.yml`
+
+The workflow performs:
+
+1. Checkout code
+2. Setup Node.js environment
+3. Install dependencies
+4. Run Playwright tests in headless mode
+5. Upload test reports and artifacts
+
+You can view the results in your GitHub Actions tab.
+
+#### Manual trigger option:
+
+- `run_regression` → set to `true` if you want to include regression tests (via the `Run workflow` button in the Actions tab).
+
+### 🧩 Jenkins Pipeline
+
+---
+
+A Jenkinsfile is included to integrate this project with Jenkins CI/CD for more flexible control.
+
+#### File:
+
+`Jenkinsfile`
+
+The pipeline performs:
+
+1. Checkout the project from GitHub
+2. Setup Node.js environment
+3. Run Smoke, Sanity, and optionally Regression tests
+4. Generate and publish Playwright HTML or Allure Reports
+5. Archive reports and test results
+
+You can trigger builds manually with the parameter:
+
+- `RUN_REGRESSION` → set to `true` if you want to include regression tests.
 
 ## 🎯 Learning Goals
 
