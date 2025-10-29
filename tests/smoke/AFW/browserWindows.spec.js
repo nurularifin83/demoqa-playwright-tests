@@ -13,15 +13,8 @@ test.describe("DEMOQA Browser Windows Module", () => {
     await browserWindowsPage.clickOnBrowserWindowsMenu();
   });
 
-  test("@smoke Verify open the page and open the new tab", async ({
-    context,
-  }) => {
-    const [newTab] = await Promise.all([
-      context.waitForEvent("page"),
-      browserWindowsPage.switchToNewTab(),
-    ]);
-
-    await newTab.waitForLoadState();
+  test("@smoke Verify open the page and open the new tab", async () => {
+    const newTab = await browserWindowsPage.switchToNewTab();
     await expect(newTab).toHaveURL("https://demoqa.com/sample");
 
     await newTab.close();

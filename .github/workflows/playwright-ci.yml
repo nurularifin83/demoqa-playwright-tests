@@ -1,0 +1,76 @@
+name: 🎭 Playwright Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: # 👈 manual trigger
+    inputs:
+      run_regression:
+        description: "Run regression tests?"
+        required: false
+        default: "false"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      # 🧪 Install Playwright Browsers (Chromium, Firefox, WebKit)
+      - name: 🌐 Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      # 🔥 Run Smoke Tests
+      - name: 🔥 Run Smoke Tests
+        env:
+          HEADLESS: true
+        run: |
+          echo "Running Smoke Suite..."
+          npx playwright test --grep @smoke --reporter=line,allure-playwright,html || exit 1
+
+      # 🧩 Run Sanity Tests
+      - name: 🧩 Run Sanity Tests
+        env:
+          HEADLESS: true
+        run: |
+          echo "Running Sanity Suite..."
+          npx playwright test --grep @sanity --reporter=line,allure-playwright,html || exit 1
+
+      # 🧬 Run Regression Tests (manual trigger only)
+      - name: 🧬 Run Regression Tests
+        if: ${{ github.event.inputs.run_regression == 'true' }}
+        env:
+          HEADLESS: true
+        run: |
+          echo "Running Regression Suite..."
+          npx playwright test --grep @regression --reporter=line,allure-playwright,html
+
+      # 📊 Upload HTML Report
+      - name: 📤 Upload Playwright HTML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: playwright-report
+          retention-days: 3
+
+      # 📈 Upload Allure Results
+      - name: 📤 Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+          retention-days: 3

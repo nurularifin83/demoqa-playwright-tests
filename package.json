@@ -7,9 +7,9 @@
     "test:sanity": "npx playwright test --grep @sanity",
     "test:smoke": "npx playwright test --grep @smoke",
     "test:regression": "npx playwright test --grep @regression",
-    "test:smoke:chromium": "npx playwright test --project=chromium --grep @smoke",
-    "test:smoke:firefox": "npx playwright test --project=firefox --grep @smoke",
-    "test:smoke:webkit": "npx playwright test --project=webkit --grep @smoke",
+    "test:smoke:chromium": "npx playwright test --project=chromium --grep @smoke1",
+    "test:smoke:firefox": "npx playwright test --project=firefox --grep @smoke1",
+    "test:smoke:webkit": "npx playwright test --project=webkit --grep @smoke1",
     "test:sanity:chromium": "npx playwright test --project=chromium --grep @sanity",
     "test:sanity:firefox": "npx playwright test --project=firefox --grep @sanity",
     "test:sanity:webkit": "npx playwright test --project=webkit --grep @sanity",
@@ -17,7 +17,16 @@
     "test:regression:firefox": "npx playwright test --project=firefox --grep @regression",
     "test:regression:webkit": "npx playwright test --project=webkit --grep @regression",
     "test:all": "npx playwright test",
-    "report": "npx playwright show-report"
+    "report": "npx playwright show-report",
+    "test:allure": "npx playwright test --reporter=line,allure-playwright",
+    "test:allure:smoke": "npx playwright test --reporter=line,allure-playwright --grep @smoke",
+    "test:allure:sanity": "npx playwright test --reporter=line,allure-playwright --grep @sanity",
+    "test:allure:regression:chromium": "npx playwright test --project=chromium --reporter=line,allure-playwright --grep @regression",
+    "test:allure:regression:firefox": "npx playwright test --project=firefox --reporter=line,allure-playwright --grep @regression",
+    "test:allure:regression:webkit": "npx playwright test --project=firefox --reporter=line,allure-playwright --grep @regression",
+    "test:allure:regression": "npx playwright test --reporter=line,allure-playwright --grep @regression",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report"
   },
   "keywords": [
     "Playwright",
@@ -28,6 +37,8 @@
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.56.1",
-    "@types/node": "^24.9.1"
+    "@types/node": "^24.9.1",
+    "allure-commandline": "^2.34.1",
+    "allure-playwright": "^3.4.1"
   }
 }

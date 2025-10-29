@@ -1,0 +1,4 @@
+❌ Failed to navigate to /: page.goto: Timeout 60000ms exceeded.
+Call log:
+  - navigating to "https://demoqa.com/", waiting until "domcontentloaded"
+

@@ -3,7 +3,7 @@ export const CONFIG = {
   TIMEOUT: 180000,
   TESDIR: "./tests",
   RETRIES: 1,
-  WORKERS: 3,
+  WORKERS: 1,
   ARGS: "--start-maximized",
 
   // 💻 Browser settings

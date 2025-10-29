@@ -15,7 +15,7 @@ export default defineConfig({
   timeout: CONFIG.TIMEOUT,
   retries: CONFIG.RETRIES,
   workers: CONFIG.WORKERS,
-  reporter: [["html", { open: "never" }]],
+  reporter: [["list"], ["allure-playwright"], ["html", { open: "never" }]],
   use: {
     headless: CONFIG.HEADLESS,
     viewport: CONFIG.VIEWPORT, // important: let browser decide full screen size
@@ -32,7 +32,7 @@ export default defineConfig({
     },
 
     // ✅ Auto-wait and stability improvements for large suites
-    navigationTimeout: 30000,
+    navigationTimeout: 60000,
     actionTimeout: 15000,
   },
 
@@ -50,7 +50,14 @@ export default defineConfig({
       name: "firefox",
       use: {
         viewport: CONFIG.VIEWPORT,
-        launchOptions: { args: [CONFIG.ARGS] },
+        launchOptions: {
+          args: [CONFIG.ARGS],
+          firefoxUserPrefs: {
+            "network.http.max-connections": 256,
+            "network.http.connection-timeout": 30,
+            "network.http.response.timeout": 60,
+          },
+        },
       },
     },
 

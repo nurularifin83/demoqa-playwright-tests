@@ -33,4 +33,10 @@ test.describe("DEMOQA Browser Windows Module", () => {
     const isClicked = await browserWindowsPage.clickOnNewWindowMessage();
     expect(isClicked).toBeTruthy;
   });
+
+  test.afterEach(async ({ context }) => {
+    for (const page of context.pages()) {
+      if (!page.isClosed) await page.close().catch(() => {});
+    }
+  });
 });

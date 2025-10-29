@@ -25,11 +25,12 @@ The repository is created for both **learning** and **professional** QA automati
 
 ## 🧰 Tech Stack
 
-| Tool / Library               | Description                             |
-| ---------------------------- | --------------------------------------- |
-| **Playwright**               | Modern E2E automation testing framework |
-| **Node.js**                  | JavaScript runtime environment          |
-| **GitHub Actions / Jenkins** | Continuous Integration & Delivery       |
+| Tool / Library                | Description                             |
+| ----------------------------- | --------------------------------------- |
+| **Playwright**                | Modern E2E automation testing framework |
+| **Node.js**                   | JavaScript runtime environment          |
+| **GitHub Actions / Jenkins**  | Continuous Integration & Delivery       |
+| **Allure Reports (optional)** | Advanced reporting integration          |
 
 ---
 
@@ -43,13 +44,18 @@ playwright-automation/
 │   ├── regression/
 │
 ├── pages/
-│   ├── base/
-│   │   └── BasePage.js
+│   ├── BasePage.js
+│   ├── HomePage.js
 │   └── elements/
-│       └── ButtonsPage.js
+│   │  └── ....spec.js
+│   └── AWS/
+│      └── ....spec.js
+│   └── forms/
+│      └── ....spec.js
 │
 ├── utils/
 │   └── helpers.js
+│   └── config.js
 │
 ├── playwright.config.js
 ├── package.json
@@ -66,7 +72,7 @@ playwright-automation/
 Installed via npm:
 
 ```bash
-npm install --save-dev @playwright/test @types/node
+npm init playwright@latest
 ```
 
 ### Optional (for reports)

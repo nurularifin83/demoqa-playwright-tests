@@ -1,0 +1,4 @@
+❌ Failed to navigate to /: page.goto: Test ended.
+Call log:
+  - navigating to "https://demoqa.com/", waiting until "load"
+

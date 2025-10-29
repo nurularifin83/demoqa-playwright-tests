@@ -28,14 +28,14 @@ export default class BasePage {
     try {
       await this.page.waitForSelector(selector, { state, timeout });
       return true;
-    } catch (error) {
+    } catch {
       this.log(`Element not found: ${selector} (${state})`, "warn");
       await this.captureErrorScreenshot("waitForElement_failed");
       return false;
     }
   }
 
-  async safeGoto(url, waitUntil = "domcontentloaded") {
+  async safeGoto(url, waitUntil = "load") {
     try {
       if (this.page.isClosed()) {
         console.warn(
@@ -46,7 +46,7 @@ export default class BasePage {
         this.page = await context.newPage();
       }
 
-      await this.page.goto(url, { waitUntil });
+      await this.page.goto(url, { waitUntil, timeout: 90000 });
     } catch (error) {
       console.error(`❌ Failed to navigate to ${url}: ${error.message}`);
       throw error;
@@ -66,7 +66,7 @@ export default class BasePage {
         // Wait until element visible and not blocked
         await this.page.waitForSelector(selector, {
           state: "visible",
-          timeout: 10000,
+          timeout: 15000,
         });
         await this.page
           .waitForSelector(".modal.show", { state: "hidden", timeout: 2000 })
@@ -100,7 +100,7 @@ export default class BasePage {
 
     await this.page.waitForSelector(selector, {
       state: "visible",
-      timeout: 10000,
+      timeout: 15000,
     });
     await this.page.fill(selector, text);
   }

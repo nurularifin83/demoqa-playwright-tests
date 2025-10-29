@@ -45,4 +45,10 @@ test.describe("DEMOQA Text Box Module", () => {
     const isCorrect = await textBoxPage.verifyNoOutput();
     expect(isCorrect).toBeTruthy;
   });
+
+  test.afterEach(async ({ context }) => {
+    for (const page of context.pages()) {
+      if (!page.isClosed) await page.close().catch(() => {});
+    }
+  });
 });

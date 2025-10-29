@@ -25,4 +25,10 @@ test.describe("DEMOQA Radio Button Module", () => {
     const isCorrect = await radioButton.verifyYesText("Yes");
     expect(isCorrect).toBeTruthy;
   });
+
+  test.afterEach(async ({ context }) => {
+    for (const page of context.pages()) {
+      if (!page.isClosed) await page.close().catch(() => {});
+    }
+  });
 });

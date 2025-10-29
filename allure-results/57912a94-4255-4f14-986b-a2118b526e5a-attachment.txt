@@ -1,0 +1,1 @@
+⚠️ [2025-10-28T13:29:53.364Z] Element not found: //span[text()='Impressive'] (visible)

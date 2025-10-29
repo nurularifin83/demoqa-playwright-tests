@@ -138,4 +138,10 @@ test.describe("DEMOQA Web tables Module", async () => {
       (await webTablesPage.isInputEmpty("#department"));
     expect(textFieldEmpty).toBeTruthy;
   });
+
+  test.afterEach(async ({ context }) => {
+    for (const page of context.pages()) {
+      if (!page.isClosed) await page.close().catch(() => {});
+    }
+  });
 });

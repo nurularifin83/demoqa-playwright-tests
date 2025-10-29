@@ -66,4 +66,10 @@ test.describe("DEMOQA Practice Form Module", () => {
     const isInvalid = await practiceFormPage.isMobileNumberInvalid();
     expect(isInvalid).toBeTruthy;
   });
+
+  test.afterEach(async ({ context }) => {
+    for (const page of context.pages()) {
+      if (!page.isClosed) await page.close().catch(() => {});
+    }
+  });
 });

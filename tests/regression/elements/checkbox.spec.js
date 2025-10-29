@@ -43,4 +43,10 @@ test.describe("DEMOQA Check Box Module", () => {
     const isTextNotVisible = await checkBoxPage.isExcelFileNotVisible();
     expect(isTextNotVisible).toBeTruthy;
   });
+
+  test.afterEach(async ({ context }) => {
+    for (const page of context.pages()) {
+      if (!page.isClosed) await page.close().catch(() => {});
+    }
+  });
 });
