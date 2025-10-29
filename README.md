@@ -149,8 +149,7 @@ npm run allure:open
 
 This project includes two CI/CD pipelines — one with GitHub Actions and another with Jenkins — to ensure continuous testing and delivery.
 
-**Workflow file:**  
-`.github/workflows/playwright-ci.yml`
+---
 
 ### 🚀 GitHub Actions
 
@@ -158,9 +157,8 @@ This project includes two CI/CD pipelines — one with GitHub Actions and anothe
 
 Runs automatically whenever you push new code to the main branch.
 
-#### Workflow file:
-
-## `.github/workflows/playwright-ci.yml`
+**Workflow file:**
+`.github/workflows/playwright-ci.yml`
 
 The workflow performs:
 
@@ -182,8 +180,7 @@ You can view the results in your GitHub Actions tab.
 
 A Jenkinsfile is included to integrate this project with Jenkins CI/CD for more flexible control.
 
-#### File:
-
+**File:**
 `Jenkinsfile`
 
 The pipeline performs:
