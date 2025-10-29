@@ -1,5 +1,6 @@
 # 🎭 Playwright Automation Framework (DemoQA)
 
+![Build Status](https://github.com/nurularifin83/demoqa-automation-25/actions/workflows/playwright-ci.yml/badge.svg?branch=main)
 ![Playwright](https://img.shields.io/badge/Playwright-%23121011.svg?style=for-the-badge&logo=playwright&logoColor=green)
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
