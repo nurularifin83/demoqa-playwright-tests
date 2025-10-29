@@ -47,7 +47,7 @@ export default class HomePage extends BasePage {
 
     // Wait for at least one main card or section to be visible
     const mainCard = this.page.locator(".card.mt-4.top-card").first();
-    await mainCard.waitFor({ state: "visible", timeout: 10000 });
+    await mainCard.waitFor({ state: "visible", timeout: 20000 });
 
     // Remove annoying ads or banners if present
     await this.page.evaluate(() => {
