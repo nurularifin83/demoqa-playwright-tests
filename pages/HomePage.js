@@ -39,23 +39,21 @@ export default class HomePage extends BasePage {
    * 🧩 Utility: make sure homepage is stable and ads removed before clicking
    */
   async ensurePageReady() {
-    // Wait for full network load
-    await this.page.waitForLoadState("networkidle");
-    await this.page.waitForTimeout(1000); // slight delay for UI animations
+    // Wait for the page to start loading
+    await this.page.waitForLoadState("domcontentloaded");
 
-    // Remove annoying ads that can block clicks
+    // Optional small delay for UI animations
+    await this.page.waitForTimeout(1000);
+
+    // Wait for at least one main card or section to be visible
+    const mainCard = this.page.locator(".card.mt-4.top-card").first();
+    await mainCard.waitFor({ state: "visible", timeout: 10000 });
+
+    // Remove annoying ads or banners if present
     await this.page.evaluate(() => {
-      const ads = ["#fixedban", "iframe", ".advertisement"];
-      ads.forEach((sel) => {
-        const el = document.querySelector(sel);
-        if (el) el.style.display = "none";
-      });
+      document
+        .querySelectorAll("#fixedban, iframe, .advertisement")
+        .forEach((el) => el.remove());
     });
-
-    // Scroll the main content into view just in case
-    const cards = this.page.locator(".card.mt-4.top-card");
-    if (await cards.first().isVisible()) {
-      await cards.first().scrollIntoViewIfNeeded();
-    }
   }
 }
