@@ -1,81 +1,96 @@
 pipeline {
-    agent any
 
     parameters {
-        booleanParam(name: 'RUN_REGRESSION', defaultValue: false, description: 'Run regression tests?')
+        booleanParam(
+            name: 'RUN_REGRESSION',
+            defaultValue: false,
+            description: 'Run regression tests?'
+        )
+    }
+
+    agent any
+
+    tools {
+        nodejs 'NodeJS 18' // 👈 configure in Jenkins > Global Tool Configuration
     }
 
     environment {
-        CI = "true"
         HEADLESS = "true"
+        CI = "true"
+        PATH = "C:\\Program Files\\nodejs;${PATH}"
     }
 
     stages {
-        stage('📥 Checkout Repository') {
+
+        stage('Checkout Code') {
             steps {
-                echo "Checking out repository..."
-                checkout scm
+                git branch: 'main', url: 'https://github.com/nurularifin83/demoqa-playwright-tests'
             }
         }
 
-        stage('⚙️ Setup Node.js') {
+        stage('Install Dependencies') {
             steps {
-                echo "Setting up Node.js..."
-                // If you use Jenkins NodeJS plugin, use 'tools' block instead.
-                sh 'curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -'
-                sh 'sudo apt-get install -y nodejs'
-                sh 'node -v'
-                sh 'npm -v'
+                echo "📦 Installing npm dependencies..."
+                bat 'call npm ci'
             }
         }
 
-        stage('📦 Install Dependencies') {
+        stage('Install Playwright Browsers') {
             steps {
-                echo "Installing dependencies..."
-                sh 'npm ci'
+                echo "🌐 Installing Playwright browsers..."
+                bat 'call npx playwright install --with-deps'
             }
         }
 
-        stage('🌐 Install Playwright Browsers') {
+        stage('Smoke Tests') {
             steps {
-                echo "Installing Playwright browsers..."
-                sh 'npx playwright install --with-deps'
+                script {
+                    echo "🔥 Running Smoke Tests..."
+                    def rc = bat(returnStatus: true, script: 'npx playwright test --grep @smoke --reporter=line,allure-playwright,html')
+                    if (rc != 0) {
+                        error "❌ Smoke tests failed — aborting pipeline!"
+                    }
+                }
             }
         }
 
-        stage('🔥 Run Smoke Tests') {
+        stage('Sanity Tests') {
             steps {
-                echo "Running Smoke Suite..."
-                sh '''
-                    npx playwright test --grep @smoke --reporter=line,allure-playwright,html || exit 1
-                '''
+                script {
+                    echo "🧠 Running Sanity Tests..."
+                    def rc = bat(returnStatus: true, script: 'npx playwright test --grep @sanity --reporter=line,allure-playwright,html')
+                    if (rc != 0) {
+                        error "❌ Sanity tests failed — aborting pipeline!"
+                    }
+                }
             }
         }
 
-        stage('🧩 Run Sanity Tests') {
-            steps {
-                echo "Running Sanity Suite..."
-                sh '''
-                    npx playwright test --grep @sanity --reporter=line,allure-playwright,html || exit 1
-                '''
-            }
-        }
-
-        stage('🧬 Run Regression Tests') {
+        stage('Regression Tests') {
             when {
                 expression { return params.RUN_REGRESSION == true }
             }
             steps {
-                echo "Running Regression Suite..."
-                sh '''
-                    npx playwright test --grep @regression --reporter=line,allure-playwright,html
-                '''
+                echo "🧪 Running Regression Tests..."
+                bat 'call npx playwright test --grep @regression --reporter=line,allure-playwright,html'
             }
         }
 
-        stage('📊 Archive Reports') {
+        stage('Publish Reports') {
             steps {
-                echo "Archiving HTML and Allure reports..."
+                echo "📊 Publishing Playwright & Allure Reports..."
+
+                // HTML Report
+                publishHTML(target: [
+                    reportName: 'Playwright HTML Report',
+                    reportDir: 'playwright-report',
+                    reportFiles: 'index.html',
+                    keepAll: true,
+                    alwaysLinkToLastBuild: true,
+                    allowMissing: false
+                ])
+
+                // Archive reports
                 archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
                 archiveArtifacts artifacts: 'allure-results/**', fingerprint: true
             }
@@ -84,8 +99,17 @@ pipeline {
 
     post {
         always {
-            echo "✅ Pipeline finished. Cleaning up..."
+            echo "🧹 Cleaning up workspace..."
             cleanWs()
+
+            // Show Allure results in Jenkins tab
+            allure([
+                includeProperties: false,
+                jdk: '',
+                results: [[path: 'allure-results']]
+            ])
+
+            echo "✅ Pipeline Finished Successfully!"
         }
     }
 }
