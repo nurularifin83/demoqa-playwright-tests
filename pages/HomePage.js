@@ -39,38 +39,43 @@ export default class HomePage extends BasePage {
    * 🧩 Utility: make sure homepage is stable and ads removed before clicking
    */
   async ensurePageReady() {
-    // Wait for the page to start loading
-    await this.page.waitForLoadState("load", { timeout: 30000 });
+    // Use 'domcontentloaded' instead of 'load' to prevent long hangs in Jenkins
+    await this.page.waitForLoadState("domcontentloaded", { timeout: 15000 });
 
-    // Remove banners or ads that may cover UI
+    // Wait extra for network to settle — but don't block forever
+    try {
+      await this.page.waitForLoadState("networkidle", { timeout: 10000 });
+    } catch {
+      console.warn("⚠️ Network idle not reached — continuing anyway");
+    }
+
+    // Remove banners, iframes, or ads that block clicks
     await this.page.evaluate(() => {
       const selectors = [
         "#fixedban",
         ".Advertisement",
         "iframe",
         "#adplus-anchor",
+        "#google_ads_iframe_",
+        ".modal-backdrop",
+        ".loading",
+        ".spinner",
       ];
       selectors.forEach((sel) => {
         document.querySelectorAll(sel).forEach((el) => el.remove());
       });
     });
 
-    // Try to wait for the main visible card, but skip if not found to avoid CI flakiness
+    // Verify the page body is visible (not blank)
+    const bodyVisible = await this.page.locator("body").isVisible();
+    if (!bodyVisible) throw new Error("❌ Page body not visible after load");
+
+    // Try to wait for one of the main cards (skip if not visible)
     try {
       const mainCard = this.page.locator(".card.mt-4.top-card").first();
-      await mainCard.waitFor({ state: "visible", timeout: 30000 });
-    } catch (e) {
-      console.warn(
-        "⚠️ Warning: Main card not visible within timeout — continuing anyway."
-      );
+      await mainCard.waitFor({ state: "visible", timeout: 15000 });
+    } catch {
+      console.warn("⚠️ Main card not visible — continuing");
     }
-
-    // Ensure no loading overlay is blocking clicks
-    await this.page.evaluate(() => {
-      const overlay = document.querySelector(
-        ".modal-backdrop, .loading, .spinner"
-      );
-      if (overlay) overlay.remove();
-    });
   }
 }
