@@ -153,8 +153,6 @@ This project includes two CI/CD pipelines — one with GitHub Actions and anothe
 
 ### 🚀 GitHub Actions
 
----
-
 Runs automatically whenever you push new code to the main branch.
 
 **Workflow file:**
@@ -175,8 +173,6 @@ You can view the results in your GitHub Actions tab.
 - `run_regression` → set to `true` if you want to include regression tests (via the `Run workflow` button in the Actions tab).
 
 ### 🧩 Jenkins Pipeline
-
----
 
 A Jenkinsfile is included to integrate this project with Jenkins CI/CD for more flexible control.
 
