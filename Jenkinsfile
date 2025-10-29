@@ -11,13 +11,13 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS 18' // 👈 configure in Jenkins > Global Tool Configuration
+        nodejs 'NodeJS 18'  // Make sure this matches your Jenkins Global Tool name
     }
 
     environment {
         HEADLESS = "true"
         CI = "true"
-        PATH = "C:\\Program Files\\nodejs;${PATH}"
+        PATH = "C:\\\\Program Files\\\\nodejs;${PATH}" // Escape backslashes properly
     }
 
     stages {
@@ -30,14 +30,14 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                echo "📦 Installing npm dependencies..."
+                echo "Installing npm dependencies..."
                 bat 'call npm ci'
             }
         }
 
         stage('Install Playwright Browsers') {
             steps {
-                echo "🌐 Installing Playwright browsers..."
+                echo "Installing Playwright browsers..."
                 bat 'call npx playwright install --with-deps'
             }
         }
@@ -45,10 +45,10 @@ pipeline {
         stage('Smoke Tests') {
             steps {
                 script {
-                    echo "🔥 Running Smoke Tests..."
-                    def rc = bat(returnStatus: true, script: 'npx playwright test --grep @smoke --reporter=line,allure-playwright,html')
+                    echo "Running Smoke Tests..."
+                    def rc = bat(returnStatus: true, script: 'call npx playwright test --grep @smoke --reporter=line,allure-playwright,html')
                     if (rc != 0) {
-                        error "❌ Smoke tests failed — aborting pipeline!"
+                        error "Smoke tests failed — aborting pipeline!"
                     }
                 }
             }
@@ -57,10 +57,10 @@ pipeline {
         stage('Sanity Tests') {
             steps {
                 script {
-                    echo "🧠 Running Sanity Tests..."
-                    def rc = bat(returnStatus: true, script: 'npx playwright test --grep @sanity --reporter=line,allure-playwright,html')
+                    echo "Running Sanity Tests..."
+                    def rc = bat(returnStatus: true, script: 'call npx playwright test --grep @sanity --reporter=line,allure-playwright,html')
                     if (rc != 0) {
-                        error "❌ Sanity tests failed — aborting pipeline!"
+                        error "Sanity tests failed — aborting pipeline!"
                     }
                 }
             }
@@ -71,16 +71,15 @@ pipeline {
                 expression { return params.RUN_REGRESSION == true }
             }
             steps {
-                echo "🧪 Running Regression Tests..."
+                echo "Running Regression Tests..."
                 bat 'call npx playwright test --grep @regression --reporter=line,allure-playwright,html'
             }
         }
 
         stage('Publish Reports') {
             steps {
-                echo "📊 Publishing Playwright & Allure Reports..."
+                echo "Publishing Playwright & Allure Reports..."
 
-                // HTML Report
                 publishHTML(target: [
                     reportName: 'Playwright HTML Report',
                     reportDir: 'playwright-report',
@@ -90,7 +89,6 @@ pipeline {
                     allowMissing: false
                 ])
 
-                // Archive reports
                 archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
                 archiveArtifacts artifacts: 'allure-results/**', fingerprint: true
             }
@@ -99,17 +97,16 @@ pipeline {
 
     post {
         always {
-            echo "🧹 Cleaning up workspace..."
+            echo "Cleaning up workspace..."
             cleanWs()
 
-            // Show Allure results in Jenkins tab
             allure([
                 includeProperties: false,
                 jdk: '',
                 results: [[path: 'allure-results']]
             ])
 
-            echo "✅ Pipeline Finished Successfully!"
+            echo "Pipeline Finished Successfully!"
         }
     }
 }
