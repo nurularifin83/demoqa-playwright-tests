@@ -61,6 +61,7 @@ playwright-automation/
 ├── playwright.config.js
 ├── package.json
 ├── README.md
+├── Jenkinsfile
 └── .github/
     └── workflows/
         └── playwright-ci.yml
