@@ -20,7 +20,12 @@ export default defineConfig({
     headless: CONFIG.HEADLESS,
     viewport: CONFIG.VIEWPORT, // important: let browser decide full screen size
     launchOptions: {
-      args: [CONFIG.ARGS],
+      args: [
+        CONFIG.ARGS,
+        "--disable-gpu",
+        "--no-sandbox",
+        "--disable-dev-shm-usage",
+      ],
     },
     baseURL: CONFIG.BASE_URL,
     screenshot: "only-on-failure",
@@ -30,7 +35,7 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
 
     // ✅ Auto-wait and stability improvements for large suites
-    navigationTimeout: 60000,
+    navigationTimeout: 120000,
     actionTimeout: 0,
   },
 
