@@ -1,12 +1,12 @@
 export const CONFIG = {
   BASE_URL: process.env.BASE_URL || "https://demoqa.com",
-  TIMEOUT: 180000,
+  TIMEOUT: 120000,
   TESDIR: "./tests",
-  RETRIES: 1,
+  RETRIES: process.env.CI ? 2 : 0,
   WORKERS: 1,
   ARGS: "--start-maximized",
 
   // 💻 Browser settings
-  HEADLESS: process.env.HEADLESS === "true" || false,
+  HEADLESS: process.env.HEADLESS === "true" || true,
   VIEWPORT: null,
 };

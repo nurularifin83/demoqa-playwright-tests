@@ -35,7 +35,7 @@ export default class BasePage {
     }
   }
 
-  async safeGoto(url, waitUntil = "load") {
+  async safeGoto(url, waitUntil = "domcontentloaded") {
     try {
       if (this.page.isClosed()) {
         console.warn(
@@ -46,7 +46,10 @@ export default class BasePage {
         this.page = await context.newPage();
       }
 
-      await this.page.goto(url, { waitUntil, timeout: 90000 });
+      await this.page.goto(url, {
+        waitUntil,
+        timeout: 60000,
+      });
     } catch (error) {
       console.error(`❌ Failed to navigate to ${url}: ${error.message}`);
       throw error;

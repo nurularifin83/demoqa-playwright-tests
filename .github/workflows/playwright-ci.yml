@@ -35,6 +35,8 @@ jobs:
       # 🔥 Run Smoke Tests
       - name: 🔥 Run Smoke Tests
         env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+          CI: true
           HEADLESS: true
         run: |
           echo "Running Smoke Suite..."
@@ -43,6 +45,8 @@ jobs:
       # 🧩 Run Sanity Tests
       - name: 🧩 Run Sanity Tests
         env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+          CI: true
           HEADLESS: true
         run: |
           echo "Running Sanity Suite..."
@@ -52,6 +56,8 @@ jobs:
       - name: 🧬 Run Regression Tests
         if: ${{ github.event.inputs.run_regression == 'true' }}
         env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+          CI: true
           HEADLESS: true
         run: |
           echo "Running Regression Suite..."

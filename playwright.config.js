@@ -27,13 +27,11 @@ export default defineConfig({
     video: "retain-on-failure",
     trace: "retain-on-failure",
 
-    contextOptions: {
-      ignoreHTTPSErrors: true, // ✅ avoids random SSL-related crashes
-    },
+    ignoreHTTPSErrors: true,
 
     // ✅ Auto-wait and stability improvements for large suites
     navigationTimeout: 60000,
-    actionTimeout: 15000,
+    actionTimeout: 0,
   },
 
   /* Configure projects for major browsers */
