@@ -21,7 +21,7 @@
     "test:allure": "npx playwright test --reporter=line,allure-playwright",
     "test:allure:smoke": "npx playwright test --reporter=line,allure-playwright --grep @smoke",
     "test:allure:sanity": "npx playwright test --reporter=line,allure-playwright --grep @sanity",
-    "test:allure:regression:chromium": "npx playwright test --project=chromium --reporter=line,allure-playwright --grep @regression",
+    "test:allure:regression:chromium": "npx playwright test --project=chromium --reporter=line,allure-playwright --grep @regression1",
     "test:allure:regression:firefox": "npx playwright test --project=firefox --reporter=line,allure-playwright --grep @regression",
     "test:allure:regression:webkit": "npx playwright test --project=firefox --reporter=line,allure-playwright --grep @regression",
     "test:allure:regression": "npx playwright test --reporter=line,allure-playwright --grep @regression",

@@ -1,0 +1,3 @@
+ℹ️ [2025-11-01T12:25:11.714Z] ✅ Clicked: xpath=//h5[text()='Elements']
+ℹ️ [2025-11-01T12:25:14.000Z] ✅ Clicked: //a[text()='Click Here for Broken Link']
+ℹ️ [2025-11-01T12:25:15.922Z] 🔗 Redirected to: http://the-internet.herokuapp.com/status_codes/500

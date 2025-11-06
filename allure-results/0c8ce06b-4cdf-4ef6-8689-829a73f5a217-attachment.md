@@ -1,0 +1,80 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - link [ref=e4] [cursor=pointer]:
+      - /url: https://demoqa.com
+      - img [ref=e5]
+  - generic [ref=e8]:
+    - generic [ref=e11]:
+      - generic [ref=e12]:
+        - generic [ref=e14] [cursor=pointer]:
+          - generic [ref=e15]:
+            - img [ref=e17]
+            - text: Elements
+          - img [ref=e22]
+        - list [ref=e27]:
+          - listitem [ref=e28] [cursor=pointer]:
+            - img [ref=e29]
+            - generic [ref=e31]: Text Box
+          - listitem [ref=e32] [cursor=pointer]:
+            - img [ref=e33]
+            - generic [ref=e35]: Check Box
+          - listitem [ref=e36] [cursor=pointer]:
+            - img [ref=e37]
+            - generic [ref=e39]: Radio Button
+          - listitem [ref=e40] [cursor=pointer]:
+            - img [ref=e41]
+            - generic [ref=e43]: Web Tables
+          - listitem [ref=e44] [cursor=pointer]:
+            - img [ref=e45]
+            - generic [ref=e47]: Buttons
+          - listitem [ref=e48] [cursor=pointer]:
+            - img [ref=e49]
+            - generic [ref=e51]: Links
+          - listitem [ref=e52] [cursor=pointer]:
+            - img [ref=e53]
+            - generic [ref=e55]: Broken Links - Images
+          - listitem [ref=e56] [cursor=pointer]:
+            - img [ref=e57]
+            - generic [ref=e59]: Upload and Download
+          - listitem [ref=e60] [cursor=pointer]:
+            - img [ref=e61]
+            - generic [ref=e63]: Dynamic Properties
+      - generic [ref=e66] [cursor=pointer]:
+        - generic [ref=e67]:
+          - img [ref=e69]
+          - text: Forms
+        - img [ref=e75]
+      - generic [ref=e81] [cursor=pointer]:
+        - generic [ref=e82]:
+          - img [ref=e84]
+          - text: Alerts, Frame & Windows
+        - img [ref=e89]
+      - generic [ref=e95] [cursor=pointer]:
+        - generic [ref=e96]:
+          - img [ref=e98]
+          - text: Widgets
+        - img [ref=e103]
+      - generic [ref=e109] [cursor=pointer]:
+        - generic [ref=e110]:
+          - img [ref=e112]
+          - text: Interactions
+        - img [ref=e117]
+      - generic [ref=e123] [cursor=pointer]:
+        - generic [ref=e124]:
+          - img [ref=e126]
+          - text: Book Store Application
+        - img [ref=e131]
+    - generic [ref=e135]:
+      - iframe [ref=e138]:
+        
+      - text: Please select an item from left to start practice.
+    - generic [ref=e144]:
+      - img "Build PlayWright tests with AI" [ref=e146] [cursor=pointer]
+      - iframe [ref=e149]:
+        
+  - contentinfo [ref=e150]:
+    - generic [ref=e151]: © 2013-2020 TOOLSQA.COM | ALL RIGHTS RESERVED.
+```
