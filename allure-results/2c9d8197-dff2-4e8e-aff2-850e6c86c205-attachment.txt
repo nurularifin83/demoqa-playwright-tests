@@ -1,0 +1,3 @@
+ℹ️ [2025-11-07T06:32:48.352Z] ✅ Clicked: xpath=//h5[text()='Elements']
+ℹ️ [2025-11-07T06:32:49.667Z] ✅ Clicked: (//li[@id='item-7'])[1]
+📤 File uploaded successfully: D:\QA\Playwright\demoqa-playwright-tests\downloads\sampleFile.jpeg
