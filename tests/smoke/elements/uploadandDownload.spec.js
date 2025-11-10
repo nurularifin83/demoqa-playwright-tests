@@ -13,7 +13,7 @@ test.describe("DEMOQA Upload And Download Module", () => {
     await uploadandDownloadPage.clickOnUploadandDownloadMenu();
   });
 
-  test("@smoke1 Verify open the page and download is successfully", async () => {
+  test("@smoke Verify open the page and download is successfully", async () => {
     await uploadandDownloadPage.downloadFile();
     // Verify is download success
     const fs = require("fs");

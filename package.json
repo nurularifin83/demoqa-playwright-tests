@@ -19,7 +19,7 @@
     "test:all": "npx playwright test",
     "report": "npx playwright show-report",
     "test:allure": "npx playwright test --reporter=line,allure-playwright",
-    "test:allure:smoke": "npx playwright test --reporter=line,allure-playwright --grep @smoke",
+    "test:allure:smoke:chromium": "npx playwright test --project=chromium --reporter=line,allure-playwright --grep @smoke1",
     "test:allure:sanity": "npx playwright test --reporter=line,allure-playwright --grep @sanity",
     "test:allure:regression:chromium": "npx playwright test --project=chromium --reporter=line,allure-playwright --grep @regression1",
     "test:allure:regression:firefox": "npx playwright test --project=firefox --reporter=line,allure-playwright --grep @regression",
